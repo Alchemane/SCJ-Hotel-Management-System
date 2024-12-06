@@ -1,0 +1,231 @@
+/* General Background and Text Colors */
+body {
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text for better contrast */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+  background-color: #1e1e1e; /* Darker navbar */
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-item {
+  margin: 0; /* Remove spacing between items */
+}
+
+.navbar-link {
+  color: #00bfa5; /* Teal accent for links */
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: #333333; /* Darker button background */
+  transition: background-color 0.3s;
+}
+
+.navbar-link:hover {
+  background-color: #007bff; /* Blue highlight on hover */
+}
+
+/* Buttons and Links */
+button, .button {
+  background-color: #333333;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover, .button:hover {
+  background-color: #9c27b0; /* Purple accent for hover effect */
+  transform: scale(1.05);
+}
+
+/* Headings and Text */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff; /* Pure white headings for prominence */
+}
+
+/* Centering Elements for Aesthetic Placement */
+.center-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+thead {
+  background-color: #333333;
+  color: #00bfa5; /* Teal color for table headings */
+}
+
+td, th {
+  border: 1px solid #444444;
+  padding: 10px;
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+tbody tr:hover {
+  background-color: #383838;
+}
+
+/* Form Container */
+.form-container {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  width: 55%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Form Labels */
+label {
+  display: block;
+  margin-bottom: 5px; /* Less margin to bring labels closer to input fields */
+  font-weight: bold;
+  color: #00bfa5; /* Teal for labels */
+}
+
+/* Form Inputs */
+input[type="text"], input[type="email"], input[type="number"], select {
+  width: 95%; /* Reduced width for better spacing */
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #333333;
+  color: #e0e0e0;
+  border: 1px solid #444444;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensure padding doesn’t affect total width */
+}
+
+/* Form Buttons */
+.form-button {
+  background-color: #007bff; /* Blue for button */
+  color: #e0e0e0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: block;
+  margin: 20px auto 0 auto; /* Center button with some top margin */
+}
+
+.form-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+/* Form Headings */
+h2 {
+  color: #ffffff; /* White for form headings */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.half-width-button {
+  width: 33%;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+/* Login Form Container */
+.login-container {
+  background-color: #1e1e1e;
+  padding: 40px;
+  border-radius: 10px;
+  width: 400px;
+  margin: 100px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* Login Form Headings */
+.login-container h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #00bfa5; /* Teal accent for headings */
+}
+
+/* Login Form Labels */
+.login-container label {
+  display: block;
+  text-align: left;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #00bfa5; /* Teal color for labels */
+}
+
+/* Login Form Inputs */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #333333;
+  border: 1px solid #444444;
+  border-radius: 5px;
+  color: #e0e0e0;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+  border: 1px solid #00bfa5; /* Teal border on focus */
+  outline: none;
+}
+
+/* Login Form Button */
+.login-container button {
+  width: 100%;
+  background-color: #007bff; /* Blue accent */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-container button:hover {
+  background-color: #0056b3; /* Darker blue for hover effect */
+  transform: scale(1.02);
+}
+
+/* Error Message Styling */
+.error-message {
+  color: #ff4444; /* Red for errors */
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
