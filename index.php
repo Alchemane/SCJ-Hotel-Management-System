@@ -1,4 +1,5 @@
-<?php // ensure page is protected by login session from admin
+<?php
+// ensure page is protected by login session from admin
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: php/admin/login.php');
@@ -7,7 +8,47 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 include 'components/NavBar.php'; // add navbar to this page
 
-require_once __DIR__ . '/components/config.php';
+$config_path = 'components/config.php';
+if (!file_exists($config_path)) {
+    die("Config file not found at: $config_path");
+}
+require_once $config_path;
+
+try {
+    // Connect to the database
+    $pdo = new PDO('sqlite:' . DB_PATH);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $pdo->prepare("
+        UPDATE Room
+        SET status = 'available'
+        WHERE roomID IN (
+            SELECT roomID
+            FROM Booking
+            WHERE checkOutDate < :today
+        )
+    ");
+    $stmt->execute([':today' => date('Y-m-d')]);
+
+    // Fetch booking data for each hotel
+    $stmt = $pdo->query("
+        SELECT h.hotelName,
+               COUNT(r.roomID) AS totalRooms,
+               SUM(CASE WHEN r.status = 'booked' THEN 1 ELSE 0 END) AS bookedRooms
+        FROM Hotel h
+        LEFT JOIN Room r ON h.hotelID = r.hotelID
+        GROUP BY h.hotelID
+        ORDER BY h.hotelName
+    ");
+    $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $totalHotels = 0;
+    $totalRooms = 0;
+    $totalBookedRooms = 0;
+
+} catch (PDOException $e) {
+    die("Database error: " . $e->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,53 +60,53 @@ require_once __DIR__ . '/components/config.php';
     <title>Hotel Management Dashboard</title>
 </head>
 <body>
-    <h1 class="center-text">SCJ Hotels</h1>
-    <h2 class="center-text">Management System</h2>
+    <h1 class="center-text">Welcome to SCJ Hotel Management System</h1>
     <p class="center-text">Select a section from the navigation bar above to begin managing the hotel data.</p>
 
     <div class="form-container">
-        <div class="center-text">
-        <h2 class="center-text">Hotel Reports</h2>
-            <?php
-            $stmt = $pdo->query("SELECT h.hotelID, h.hotelName,
-                COUNT(*) AS total_rooms,
-                COUNT(CASE WHEN r.status = 'booked' THEN 1 END) AS booked_rooms
-            FROM Hotel h
-            INNER JOIN Room r ON h.hotelID = r.hotelID
-            GROUP BY h.hotelID, h.hotelName");
+        <h2 class="center-text">Hotel Booking Efficiency</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hotel Name</th>
+                    <th>Total Rooms</th>
+                    <th>Booked Rooms</th>
+                    <th>Booking Efficiency</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($hotels as $hotel): ?>
+                    <?php
+                    $totalHotels++;
+                    $totalRooms += $hotel['totalRooms'];
+                    $totalBookedRooms += $hotel['bookedRooms'];
+                    ?>
+                    <tr>
+                        <td><?= htmlspecialchars($hotel['hotelName']) ?></td>
+                        <td><?= htmlspecialchars($hotel['totalRooms']) ?></td>
+                        <td><?= htmlspecialchars($hotel['bookedRooms']) ?></td>
+                        <td>
+                            <?= $hotel['totalRooms'] > 0
+                                ? number_format(($hotel['bookedRooms'] / $hotel['totalRooms']) * 100, 2) . '%'
+                                : 'N/A'
+                            ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
 
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $hotelID = $row['hotelID'];
-                $hotelName = $row['hotelName'];
-                $totalRooms = $row['total_rooms'];
-                $bookedRooms = $row['booked_rooms'];
-
-                $bookedPercentage = ($bookedRooms / $totalRooms) * 100;
-
-                echo "<h3>Hotel: $hotelName</h3>";
-                echo "<p>Total Rooms: $totalRooms</p>";
-                echo "<p>Booked Rooms: $bookedRooms</p>";
-                echo "<p>Booking Efficiency: " . round($bookedPercentage, 2) . "%</p>";
-            }
-
-            $totalRooms = 0;
-            $totalBookedRooms = 0;
-            $stmt = $pdo->query("SELECT COUNT(*) AS total_rooms,
-                                    COUNT(CASE WHEN r.status = 'booked' THEN 1 END) AS booked_rooms
-                                FROM Room r");
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $totalRooms += $row['total_rooms'];
-            $totalBookedRooms += $row['booked_rooms'];
-
-            // Calculate the franchise-wide booking efficiency
-            $franchiseEfficiency = ($totalBookedRooms / $totalRooms) * 100;
-
-            echo "<h3>Total Hotel Efficiency</h3>";
-            echo "<p>Total Rooms: $totalRooms</p>";
-            echo "<p>Total Booked Rooms: $totalBookedRooms</p>";
-            echo "<p>Company Booking Efficiency: " . round($franchiseEfficiency, 2) . "%</p>";
-            ?>
-        </div>
+                <tr>
+                    <th>Total Hotels</th>
+                    <th><?= $totalRooms ?></th>
+                    <th><?= $totalBookedRooms ?></th>
+                    <th>
+                        <?= $totalRooms > 0
+                            ? number_format(($totalBookedRooms / $totalRooms) * 100, 2) . '%'
+                            : 'N/A'
+                        ?>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

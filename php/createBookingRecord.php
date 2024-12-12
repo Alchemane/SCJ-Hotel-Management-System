@@ -18,7 +18,7 @@ require_once $config_path;
 // Connect to the database
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $hotelID = $_POST['hotelID'] ?? null;
+        $hotelID = $_POST['hotelID'] ?? null; // needed for cross referencing available rooms to hotels
 
         $guestID = $_POST['guestID'] ?? null;
         $roomID = $_POST['roomID'] ?? null;
@@ -89,6 +89,13 @@ try {
             ':checkOut' => $checkOutDate,
             ':bookingStatus' => $bookingStatus,
         ]);
+        // update room status to booked
+        $stmt = $pdo->prepare("
+        UPDATE Room
+        SET status = 'booked'
+        WHERE roomID = :roomID
+        ");
+        $stmt->execute([':roomID' => $roomID]);
 
         header('Location: viewBookings.php?message=Booking Added Successfully');
     } else {

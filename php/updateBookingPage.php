@@ -1,40 +1,31 @@
-<?php // ensure page is protected by login session from admin
+<?php
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: admin/login.php');
     exit;
 }
 
-include '../components/NavBar.php'; // add navbar to this page
+include '../components/NavBar.php';
 
-// Database Connection
 $config_path = '../components/config.php';
 if (!file_exists($config_path)) {
     die("Config file not found at: $config_path");
 }
 require_once $config_path;
 
-// Connect to the database
-try {
-    
+if (isset($_GET['id'])) {
+    $bookingID = $_GET['id'];
 
-    // Get booking details if an ID is provided
-    if (isset($_GET['bookingID'])) {
-        $bookingID = $_GET['bookingID'];
-        $stmt = $pdo->prepare('SELECT * FROM Booking WHERE bookingID = ?');
-        $stmt->execute([$bookingID]);
-        $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare('SELECT * FROM Booking WHERE bookingID = ?');
+    $stmt->execute([$bookingID]);
+    $booking = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$booking) {
-            echo "Booking not found.";
-            exit;
-        }
-    } else {
-        echo "No booking ID provided.";
+    if (!$booking) {
+        echo "Booking not found.";
         exit;
     }
-} catch (PDOException $e) {
-    echo "Database error: " . $e->getMessage();
+} else {
+    echo "No booking ID provided.";
     exit;
 }
 ?>
@@ -45,32 +36,62 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/scripts.js"></script>
     <title>Update Booking</title>
 </head>
 <body>
     <div class="form-container">
-        <h2 class="center-text">Update Booking Information</h2>
-        <form action="updateBookingRecord.php" method="post">
+        <h2 class="center-text">Update Booking</h2>
+        <form action="updateBookingRecord.php" method="POST">
             <input type="hidden" name="bookingID" value="<?= htmlspecialchars($booking['bookingID']) ?>">
 
-            <label for="guestID">Guest ID:</label>
-            <input type="number" name="guestID" id="guestID" value="<?= htmlspecialchars($booking['guestID']) ?>" required>
+            <label for="guestID">Guest:</label>
+            <select id="guestID" name="guestID" required>
+                <?php
+                $stmt = $pdo->query("SELECT guestID, firstName || ' ' || lastName AS fullName FROM Guest");
+                $guests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            <label for="roomID">Room ID:</label>
-            <input type="number" name="roomID" id="roomID" value="<?= htmlspecialchars($booking['roomID']) ?>" required>
+                foreach ($guests as $guest) {
+                    $selected = ($guest['guestID'] == $booking['guestID']) ? 'selected' : '';
+                    echo '<option value="' . htmlspecialchars($guest['guestID']) . '" ' . $selected . '>' . htmlspecialchars($guest['fullName']) . '</option>';
+                }
+                ?>
+            </select>
+
+            <label for="hotelID">Hotel:</label>
+            <select id="hotelID" name="hotelID" required>
+                <option value="" disabled>Select a hotel</option>
+                <?php
+                $stmt = $pdo->query("SELECT hotelID, hotelName FROM Hotel");
+                $hotels = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($hotels as $hotel) {
+                    $selected = ($hotel['hotelID'] == $booking['hotelID']) ? 'selected' : '';
+                    echo '<option value="' . htmlspecialchars($hotel['hotelID']) . '" ' . $selected . '>' . htmlspecialchars($hotel['hotelName']) . '</option>';
+                }
+                ?>
+            </select>
+
+            <label for="roomID">Room:</label>
+            <select id="roomID" name="roomID" required>
+                <option value="<?= htmlspecialchars($booking['roomID']) ?>" selected>Select a room</option>
+            </select>
 
             <label for="checkInDate">Check-In Date:</label>
-            <input type="date" name="checkInDate" id="checkInDate" value="<?= htmlspecialchars($booking['checkInDate']) ?>" required>
+            <input type="date" id="checkInDate" name="checkInDate" value="<?= htmlspecialchars($booking['checkInDate']) ?>" required>
 
             <label for="checkOutDate">Check-Out Date:</label>
-            <input type="date" name="checkOutDate" id="checkOutDate" value="<?= htmlspecialchars($booking['checkOutDate']) ?>" required>
+            <input type="date" id="checkOutDate" name="checkOutDate" value="<?= htmlspecialchars($booking['checkOutDate']) ?>" required>
 
             <label for="bookingStatus">Booking Status:</label>
-            <input type="text" name="bookingStatus" id="bookingStatus" value="<?= htmlspecialchars($booking['bookingStatus']) ?>" required>
+            <select id="bookingStatus" name="bookingStatus" required>
+                <option value="confirmed" <?= ($booking['bookingStatus'] == 'confirmed') ? 'selected' : '' ?>>Confirmed</option>
+                <option value="pending" <?= ($booking['bookingStatus'] == 'pending') ? 'selected' : '' ?>>Pending</option>
+                <option value="canceled" <?= ($booking['bookingStatus'] == 'canceled') ? 'selected' : '' ?>>Canceled</option>
+            </select>
 
-            <button type="submit">Update Booking</button>
+            <button type="submit" class="form-button">Update Booking</button>
         </form>
-        <a href="viewBookings.php">Back to Booking List</a>
     </div>
 </body>
 </html>

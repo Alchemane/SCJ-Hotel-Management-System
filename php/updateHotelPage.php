@@ -25,26 +25,29 @@ try {
 }
 ?>
 
-<div class="form-container">
-    <h2 class="center-text">Update Hotel</h2>
-    <form action="updateHotelRecord.php" method="post">
-        <input type="hidden" name="hotelID" value="<?= htmlspecialchars($hotel['hotelID']) ?>">
+<body>
+    <div class="form-container">
+        <h2 class="center-text">Update Hotel Information</h2>
+        <form action="updateHotelRecord.php" method="POST">
+            <input type="hidden" name="hotelID" value="<?= htmlspecialchars($hotel['hotelID']) ?>">
+            <label for="hotelName">Hotel Name:</label>
+            <input type="text" id="hotelName" name="hotelName" value="<?= htmlspecialchars($hotel['hotelName']) ?>" required>
 
-        <label for="hotelName">Hotel Name:</label>
-        <input type="text" id="hotelName" name="hotelName" value="<?= htmlspecialchars($hotel['hotelName']) ?>" required>
+            <label for="hotelAddress">Hotel Address:</label>
+            <input type="text" id="hotelAddress" name="hotelAddress" value="<?= htmlspecialchars($hotel['hotelAddress']) ?>" required>
 
-        <label for="hotelAddress">Address:</label>
-        <input type="text" id="hotelAddress" name="hotelAddress" value="<?= htmlspecialchars($hotel['hotelAddress']) ?>" required>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="<?= htmlspecialchars($hotel['city']) ?>" required>
 
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" value="<?= htmlspecialchars($hotel['city']) ?>" required>
+            <label for="postcode">Postcode:</label>
+            <input type="text" id="postcode" name="postcode" value="<?= htmlspecialchars($hotel['postcode']) ?>" required>
 
-        <label for="postcode">Postcode:</label>
-        <input type="text" id="postcode" name="postcode" value="<?= htmlspecialchars($hotel['postcode']) ?>" required>
+            <label for="hotel_telNo">Telephone Number:</label>
+            <input type="text" id="hotel_telNo" name="hotel_telNo" value="<?= htmlspecialchars($hotel['hotel_telNo']) ?>" required>
 
-        <label for="hotel_telNo">Telephone Number:</label>
-        <input type="text" id="hotel_telNo" name="hotel_telNo" value="<?= htmlspecialchars($hotel['hotel_telNo']) ?>" required>
-
-        <button type="submit" class="form-button">Update Hotel</button>
-    </form>
-</div>
+            <button type="submit" class="form-button">Update Hotel</button>
+        </form>
+        <a href="viewHotels.php">Back to Hotel List</a>
+    </div>
+</body>
+</html>

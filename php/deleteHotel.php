@@ -17,7 +17,7 @@ require_once $config_path;
 // Connect to the database
 try {
     if (isset($_GET['hotelID'])) {
-        $guestID = $_GET['hotelID'];
+        $hotelID = $_GET['hotelID'];
     
         // Delete the guest from the database
         $stmt = $pdo->prepare("DELETE FROM Hotel WHERE hotelID = :hotelID");

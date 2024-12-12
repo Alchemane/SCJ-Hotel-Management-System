@@ -10,8 +10,6 @@ include '../components/NavBar.php'; // add navbar to this page
 
 // Database Connection
 try {
-    
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get form data
         $bookingID = $_POST['bookingID'];

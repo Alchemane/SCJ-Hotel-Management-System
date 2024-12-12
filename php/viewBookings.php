@@ -72,7 +72,7 @@ try {
                     <td><?= htmlspecialchars($booking['checkOutDate']) ?></td>
                     <td><?= htmlspecialchars($booking['bookingStatus']) ?></td>
                     <td>
-                        <a href="updateBookingPage.php?bookingID=<?= $booking['bookingID'] ?>">Update</a>
+                        <a href="updateBookingPage.php?id=<?= htmlspecialchars($booking['bookingID']) ?>">Update</a>
                         <a href="deleteBooking.php?bookingID=<?= $booking['bookingID'] ?>" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
                     </td>
                 </tr>

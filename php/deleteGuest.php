@@ -16,8 +16,6 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    
-
     if (isset($_GET['guestID'])) {
         $guestID = $_GET['guestID'];
     
