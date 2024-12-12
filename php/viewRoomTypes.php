@@ -15,8 +15,7 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
     $stmt = $pdo->query('SELECT * FROM RoomType');
     $roomTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -46,7 +45,6 @@ try {
                     <th>Room Type ID</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Price per Night</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -56,7 +54,6 @@ try {
                         <td><?= htmlspecialchars($roomType['roomTypeID']) ?></td>
                         <td><?= htmlspecialchars($roomType['roomTypeName']) ?></td>
                         <td><?= htmlspecialchars($roomType['description']) ?></td>
-                        <td><?= htmlspecialchars($roomType['pricePerNight']) ?></td>
                         <td>
                             <a href="updateRoomTypePage.php?roomTypeID=<?= $roomType['roomTypeID'] ?>">Update</a>
                             <a href="deleteRoomType.php?roomTypeID=<?= $roomType['roomTypeID'] ?>" onclick="return confirm('Are you sure you want to delete this room type?')">Delete</a>

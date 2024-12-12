@@ -10,8 +10,7 @@ include '../components/NavBar.php'; // add navbar to this page
 
 // Database Connection
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get form data

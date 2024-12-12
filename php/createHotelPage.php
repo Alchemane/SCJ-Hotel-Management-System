@@ -6,7 +6,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-include 'components/NavBar.php'; // Include navbar
+include '../components/NavBar.php'; // Include navbar
 ?>
 
 <!DOCTYPE html>

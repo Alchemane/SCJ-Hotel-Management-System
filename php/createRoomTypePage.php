@@ -19,15 +19,12 @@ include '../components/NavBar.php'; // add navbar to this page
 <body>
     <div class="form-container">
         <h2>Add New Room Type</h2>
-        <form action="createNewRoomTypeRecord.php" method="post">
+        <form action="createRoomTypeRecord.php" method="post">
             <label for="roomTypeName">Room Type Name:</label>
             <input type="text" id="roomTypeName" name="roomTypeName" required>
 
             <label for="description">Description:</label>
             <input type="text" id="description" name="description">
-
-            <label for="pricePerNight">Price Per Night:</label>
-            <input type="number" id="pricePerNight" name="pricePerNight" step="0.01" required>
 
             <button type="submit" class="form-button">Add Room Type</button>
         </form>

@@ -16,23 +16,16 @@ require_once $config_path;
 
 // Connect to the database
 try {
+    if (isset($_GET['hotelID'])) {
+        $guestID = $_GET['hotelID'];
     
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Get form data
-        $roomTypeID = $_POST['roomTypeID'];
-        $roomTypeName = $_POST['roomTypeName'];
-        $description = $_POST['description'];
-
-        // Update room type in the database
-        $stmt = $pdo->prepare('UPDATE RoomType SET roomTypeName = ?, description = ? WHERE roomTypeID = ?');
-        $stmt->execute([$roomTypeName, $description, $roomTypeID]);
-
-        // Redirect to the viewRoomTypes.php page
-        header('Location: viewRoomTypes.php');
-        exit;
+        // Delete the guest from the database
+        $stmt = $pdo->prepare("DELETE FROM Hotel WHERE hotelID = :hotelID");
+        $stmt->execute([':hotelID' => $hotelID]);
+    
+        header('Location: viewHotels.php?message=Hotel Deleted Successfully');
     } else {
-        echo "Invalid request.";
+        echo "No Hotel ID provided.";
     }
 } catch (PDOException $e) {
     echo "Database error: " . $e->getMessage();

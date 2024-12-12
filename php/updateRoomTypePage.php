@@ -16,12 +16,11 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
     // Get room type details if an ID is provided
-    if (isset($_GET['id'])) {
-        $roomTypeID = $_GET['id'];
+    if (isset($_GET['roomTypeID'])) {
+        $roomTypeID = $_GET['roomTypeID'];
         $stmt = $pdo->prepare('SELECT * FROM RoomType WHERE roomTypeID = ?');
         $stmt->execute([$roomTypeID]);
         $roomType = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -49,21 +48,20 @@ try {
     <title>Update Room Type</title>
 </head>
 <body>
-    <h1>Update Room Type Information</h1>
-    <form action="updateRoomTypeRecord.php" method="post">
-        <input type="hidden" name="roomTypeID" value="<?= htmlspecialchars($roomType['roomTypeID']) ?>">
+    <div class="form-container">
+        <h2 class="center-text">Update Room Type Information</h2>
+        <form action="updateRoomTypeRecord.php" method="post">
+            <input type="hidden" name="roomTypeID" value="<?= htmlspecialchars($roomType['roomTypeID']) ?>">
 
-        <label for="roomTypeName">Room Type Name:</label>
-        <input type="text" name="roomTypeName" id="roomTypeName" value="<?= htmlspecialchars($roomType['roomTypeName']) ?>" required>
+            <label for="roomTypeName">Room Type Name:</label>
+            <input type="text" name="roomTypeName" id="roomTypeName" value="<?= htmlspecialchars($roomType['roomTypeName']) ?>" required>
 
-        <label for="description">Description:</label>
-        <textarea name="description" id="description" rows="4"><?= htmlspecialchars($roomType['description']) ?></textarea>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" rows="4"><?= htmlspecialchars($roomType['description']) ?></textarea>
 
-        <label for="pricePerNight">Price Per Night:</label>
-        <input type="number" step="0.01" name="pricePerNight" id="pricePerNight" value="<?= htmlspecialchars($roomType['pricePerNight']) ?>" required>
-
-        <button type="submit">Update Room Type</button>
-    </form>
-    <a href="viewRoomTypes.php">Back to Room Type List</a>
+            <button type="submit">Update Room Type</button>
+        </form>
+        <a href="viewRoomTypes.php">Back to Room Type List</a>
+    </div>
 </body>
 </html>

@@ -16,19 +16,16 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
-    if (isset($_GET['id'])) {
-        $guestID = $_GET['id'];
-
-        // Delete guest from the database
-        $stmt = $pdo->prepare('DELETE FROM Guest WHERE guestID = ?');
-        $stmt->execute([$guestID]);
-
-        // Redirect to the viewGuests.php page
-        header('Location: viewGuests.php');
-        exit;
+    if (isset($_GET['guestID'])) {
+        $guestID = $_GET['guestID'];
+    
+        // Delete the guest from the database
+        $stmt = $pdo->prepare("DELETE FROM Guest WHERE guestID = :guestID");
+        $stmt->execute([':guestID' => $guestID]);
+    
+        header('Location: viewGuests.php?message=Guest Deleted Successfully');
     } else {
         echo "No guest ID provided.";
     }

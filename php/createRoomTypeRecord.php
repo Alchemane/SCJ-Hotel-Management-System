@@ -16,18 +16,16 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get form data
         $roomTypeName = $_POST['roomTypeName'];
         $description = $_POST['description'];
-        $pricePerNight = $_POST['pricePerNight'];
 
         // Insert new room type into the database
-        $stmt = $pdo->prepare('INSERT INTO RoomType (roomTypeName, description, pricePerNight) VALUES (?, ?, ?)');
-        $stmt->execute([$roomTypeName, $description, $pricePerNight]);
+        $stmt = $pdo->prepare('INSERT INTO RoomType (roomTypeName, description) VALUES (?, ?)');
+        $stmt->execute([$roomTypeName, $description]);
 
         // Redirect to the viewRoomTypes.php page
         header('Location: viewRoomTypes.php');

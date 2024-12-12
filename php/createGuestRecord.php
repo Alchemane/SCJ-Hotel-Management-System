@@ -15,8 +15,7 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get form data

@@ -10,17 +10,23 @@ include '../components/NavBar.php'; // add navbar to this page
 
 // Database Connection
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     // Get guest details if an ID is provided
-    if (isset($_GET['id'])) {
-        $guestID = $_GET['id'];
-        $stmt = $pdo->prepare('SELECT * FROM Guest WHERE guestID = ?');
-        $stmt->execute([$guestID]);
-        $guest = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$guest) {
+    if (isset($_GET['guestID'])) {
+        $guestID = $_GET['guestID'];
+    
+        // Fetch the guest's details from the database
+        $stmt = $pdo->prepare("SELECT * FROM Guest WHERE guestID = :guestID");
+        $stmt->execute([':guestID' => $guestID]);
+        $guest = $stmt->fetch();
+    
+        if ($guest) {
+            // Pre-fill the form fields
+            $firstName = $guest['firstName'];
+            $lastName = $guest['lastName'];
+            $email = $guest['email'];
+            $phoneNo = $guest['phoneNo'];
+            $address = $guest['address'];
+        } else {
             echo "Guest not found.";
             exit;
         }
@@ -43,27 +49,29 @@ try {
     <title>Update Guest</title>
 </head>
 <body>
-    <h1>Update Guest Information</h1>
-    <form action="updateGuestRecord.php" method="post">
-        <input type="hidden" name="guestID" value="<?= htmlspecialchars($guest['guestID']) ?>">
+    <div class="form-container">
+        <h2 class="center-text">Update Guest Information</h2>
+        <form action="updateGuestRecord.php" method="post">
+            <input type="hidden" name="guestID" value="<?= htmlspecialchars($guest['guestID']) ?>">
 
-        <label for="firstName">First Name:</label>
-        <input type="text" name="firstName" id="firstName" value="<?= htmlspecialchars($guest['firstName']) ?>" required>
+            <label for="firstName">First Name:</label>
+            <input type="text" name="firstName" id="firstName" value="<?= htmlspecialchars($guest['firstName']) ?>" required>
 
-        <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" id="lastName" value="<?= htmlspecialchars($guest['lastName']) ?>" required>
+            <label for="lastName">Last Name:</label>
+            <input type="text" name="lastName" id="lastName" value="<?= htmlspecialchars($guest['lastName']) ?>" required>
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="<?= htmlspecialchars($guest['email']) ?>" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="<?= htmlspecialchars($guest['email']) ?>" required>
 
-        <label for="phoneNo">Phone Number:</label>
-        <input type="text" name="phoneNo" id="phoneNo" value="<?= htmlspecialchars($guest['phoneNo']) ?>" required>
+            <label for="phoneNo">Phone Number:</label>
+            <input type="text" name="phoneNo" id="phoneNo" value="<?= htmlspecialchars($guest['phoneNo']) ?>" required>
 
-        <label for="address">Address:</label>
-        <input type="text" name="address" id="address" value="<?= htmlspecialchars($guest['address']) ?>">
+            <label for="address">Address:</label>
+            <input type="text" name="address" id="address" value="<?= htmlspecialchars($guest['address']) ?>">
 
-        <button type="submit">Update Guest</button>
-    </form>
-    <a href="viewGuests.php">Back to Guest List</a>
+            <button type="submit">Update Guest</button>
+        </form>
+        <a href="viewGuests.php">Back to Guest List</a>
+    </div>
 </body>
 </html>

@@ -13,9 +13,6 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $stmt = $pdo->prepare('INSERT INTO Hotel (hotelName, hotelAddress, city, postcode, hotel_telNo) VALUES (?, ?, ?, ?, ?)');
     $stmt->execute([$_POST['hotelName'], $_POST['hotelAddress'], $_POST['city'], $_POST['postcode'], $_POST['hotel_telNo']]);
 

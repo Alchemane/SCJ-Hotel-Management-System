@@ -16,11 +16,10 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
-    if (isset($_GET['id'])) {
-        $roomTypeID = $_GET['id'];
+    if (isset($_GET['roomTypeID'])) {
+        $roomTypeID = $_GET['roomTypeID'];
 
         // Delete room type from the database
         $stmt = $pdo->prepare('DELETE FROM RoomType WHERE roomTypeID = ?');

@@ -19,7 +19,7 @@ include '../components/NavBar.php'; // add navbar to this page
 <body>
     <div class="form-container">
         <h2>Add New Guest</h2>
-        <form action="createNewGuestRecord.php" method="post">
+        <form action="createGuestRecord.php" method="post">
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" required>
 

@@ -15,8 +15,7 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
     $stmt = $pdo->query('SELECT * FROM Guest');
     $guests = $stmt->fetchAll(PDO::FETCH_ASSOC);

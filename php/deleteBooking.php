@@ -16,11 +16,10 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
-    if (isset($_GET['id'])) {
-        $bookingID = $_GET['id'];
+    if (isset($_GET['bookingID'])) {
+        $bookingID = $_GET['bookingID'];
 
         // Delete booking from the database
         $stmt = $pdo->prepare('DELETE FROM Booking WHERE bookingID = ?');

@@ -5,7 +5,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-include 'components/NavBar.php';
+include '../components/NavBar.php';
 
 try {
     $pdo = new PDO('sqlite:../database/hotel_management.db');
@@ -26,7 +26,7 @@ try {
 ?>
 
 <div class="form-container">
-    <h2>Update Hotel</h2>
+    <h2 class="center-text">Update Hotel</h2>
     <form action="updateHotelRecord.php" method="post">
         <input type="hidden" name="hotelID" value="<?= htmlspecialchars($hotel['hotelID']) ?>">
 

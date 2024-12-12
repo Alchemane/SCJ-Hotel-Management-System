@@ -18,7 +18,7 @@ if (isset($_GET['error'])) {
 </head>
 <body>
     <div class="login-container">
-        <h1>Admin Login</h1>
+        <h2 class="center-text">Admin Login</h2>
         
         <!-- Display error message if login fails -->
         <?php if ($error_message): ?>

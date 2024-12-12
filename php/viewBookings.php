@@ -15,10 +15,20 @@ require_once $config_path;
 
 // Connect to the database
 try {
-    $pdo = new PDO('sqlite:' . DB_PATH);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
-    $stmt = $pdo->query('SELECT * FROM Booking');
+    $stmt = $pdo->query("
+        SELECT Booking.bookingID, 
+            Guest.firstName || ' ' || Guest.lastName AS guestName,
+            Room.roomNumber, 
+            Booking.checkInDate, 
+            Booking.checkOutDate, 
+            Booking.bookingStatus
+        FROM Booking
+        INNER JOIN Guest ON Booking.guestID = Guest.guestID
+        INNER JOIN Room ON Booking.roomID = Room.roomID
+        ORDER BY Booking.checkInDate
+    ");
     $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo 'Database error: ' . $e->getMessage();
@@ -41,33 +51,33 @@ try {
             <a href="createBookingPage.php" class="form-button half-width-button">Add New Booking</a>
         </div>
         <table>
-            <thead>
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Guest</th>
+                <th>Room</th>
+                <th>Check-In Date</th>
+                <th>Check-Out Date</th>
+                <th>Booking Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($bookings as $booking): ?>
                 <tr>
-                    <th>Booking ID</th>
-                    <th>Guest ID</th>
-                    <th>Room ID</th>
-                    <th>Check-In Date</th>
-                    <th>Check-Out Date</th>
-                    <th>Booking Status</th>
-                    <th>Actions</th>
+                    <td><?= htmlspecialchars($booking['bookingID']) ?></td>
+                    <td><?= htmlspecialchars($booking['guestName']) ?></td>
+                    <td><?= htmlspecialchars($booking['roomNumber']) ?></td>
+                    <td><?= htmlspecialchars($booking['checkInDate']) ?></td>
+                    <td><?= htmlspecialchars($booking['checkOutDate']) ?></td>
+                    <td><?= htmlspecialchars($booking['bookingStatus']) ?></td>
+                    <td>
+                        <a href="updateBookingPage.php?bookingID=<?= $booking['bookingID'] ?>">Update</a>
+                        <a href="deleteBooking.php?bookingID=<?= $booking['bookingID'] ?>" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($bookings as $booking): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($booking['bookingID']) ?></td>
-                        <td><?= htmlspecialchars($booking['guestID']) ?></td>
-                        <td><?= htmlspecialchars($booking['roomID']) ?></td>
-                        <td><?= htmlspecialchars($booking['checkInDate']) ?></td>
-                        <td><?= htmlspecialchars($booking['checkOutDate']) ?></td>
-                        <td><?= htmlspecialchars($booking['bookingStatus']) ?></td>
-                        <td>
-                            <a href="updateBookingPage.php?bookingID=<?= $booking['bookingID'] ?>">Update</a>
-                            <a href="deleteBooking.php?bookingID=<?= $booking['bookingID'] ?>" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
+            <?php endforeach; ?>
+        </tbody>
         </table>
     </div>
 </body>
