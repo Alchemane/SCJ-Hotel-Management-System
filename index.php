@@ -12,7 +12,7 @@ $config_path = 'components/config.php';
 if (!file_exists($config_path)) {
     die("Config file not found at: $config_path");
 }
-require_once $config_path;
+require_once $config_path; // import database
 
 try {
     // Connect to the database

@@ -45,9 +45,15 @@ try {
             <label for="hotel_telNo">Telephone Number:</label>
             <input type="text" id="hotel_telNo" name="hotel_telNo" value="<?= htmlspecialchars($hotel['hotel_telNo']) ?>" required>
 
-            <button type="submit" class="form-button">Update Hotel</button>
+            <div class="button-container">
+                <form action="viewHotels.php">
+                    <button type="submit" class="form-button cancel-button">Cancel</button>
+                </form>
+                <button type="submit" class="form-button">Update Hotel</button>
+            </div>
         </form>
-        <a href="viewHotels.php">Back to Hotel List</a>
+
+        
     </div>
 </body>
 </html>

@@ -36,7 +36,6 @@ try {
     $stmt->execute([$username, $hashedPassword]);
     echo "Admin user added successfully!";
 } catch (PDOException $e) {
-    // Log the error
     error_log("Failed to insert admin user: " . $e->getMessage(), 3, __DIR__ . '/../logs/error_log.txt');
     die("An error occurred while adding the admin user. Please contact support.");
 }

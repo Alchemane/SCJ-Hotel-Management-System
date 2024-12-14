@@ -59,9 +59,13 @@ try {
             <label for="description">Description:</label>
             <textarea name="description" id="description" rows="4"><?= htmlspecialchars($roomType['description']) ?></textarea>
 
-            <button type="submit">Update Room Type</button>
+            <div class="button-container">
+                <form action="viewRoomTypes.php">
+                    <button type="submit" class="form-button cancel-button">Cancel</button>
+                </form>
+                <button type="submit" class="form-button">Update Room Type</button>
+            </div>
         </form>
-        <a href="viewRoomTypes.php">Back to Room Type List</a>
     </div>
 </body>
 </html>

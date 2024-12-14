@@ -92,7 +92,12 @@ if (isset($_GET['roomID'])) {
             <label for="pricePerNight">Price Per Night:</label>
             <input type="number" id="pricePerNight" name="pricePerNight" value="<?= $pricePerNight ?>" step="0.01" required><br>
 
-            <button type="submit">Update Room</button>
+            <div class="button-container">
+                <form action="viewRooms.php">
+                    <button type="submit" class="form-button cancel-button">Cancel</button>
+                </form>
+                <button type="submit" class="form-button">Update Room</button>
+            </div>
         </form>
     </div>
 </body>

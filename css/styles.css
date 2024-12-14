@@ -1,7 +1,6 @@
-/* General Dark Theme Styling */
 body {
-    background-color: #121212; /* Dark background */
-    color: #e0e0e0; /* Light text */
+    background-color: #121212;
+    color: #e0e0e0;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -11,7 +10,6 @@ body {
   text-align: center;
 }
 
-/* Navbar Styling */
 .navbar {
     background-color: #1e1e1e;
     padding: 10px;
@@ -36,11 +34,10 @@ body {
 }
 
 .navbar-link:hover {
-    background-color: #007bff; /* Blue hover */
+    background-color: #007bff;
     color: #ffffff;
 }
 
-/* Container for Forms */
 .form-container {
     background-color: #1e1e1e;
     padding: 20px;
@@ -56,14 +53,12 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Headings Styling */
 h2 {
     text-align: center;
     color: #ff9800;
     margin-bottom: 20px;
 }
 
-/* Inputs and Selects Styling */
 input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="date"], select {
     width: 100%;
     padding: 10px;
@@ -76,7 +71,7 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
 }
 
 input:focus, select:focus {
-    border-color: #ff9800; /* Teal for focus */
+    border-color: #ff9800;
     outline: none;
 }
 
@@ -94,27 +89,53 @@ label {
   color: #e0e0e0;
 }
 
-/* Buttons Styling */
+.button-container {
+  display: flex;
+  gap: 30px;
+  margin-top: 10px;
+  align-items: center;
+}
+
 button, .form-button {
-    background-color: #007bff; /* Blue */
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    display: block;
-    margin: 20px auto 0 auto; /* Center button */
-    width: 50%;
+  flex: 2;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: block;
+  margin: 20px auto 0 auto;
+  width: 50%;
 }
 
 button:hover, .form-button:hover {
-    background-color: #ff4081; /* Pink hover */
+    background-color: #ff4081;
     transform: scale(1.05);
-    color: #ffffff; /* Ensure text remains visible */
+    color: #ffffff;
 }
 
-/* Table Styling */
+.cancel-button {
+  flex: 1;
+  background-color: #ff304c;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: block;
+  margin: 20px auto 0 auto;
+  width: 30%;
+}
+
+.cancel-button:hover {
+  background-color: #ff9800;
+  transform: scale(1.05);
+  color: #ffffff;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -136,7 +157,6 @@ tr:nth-child(even) {
     background-color: #2c2c2c;
 }
 
-/* Login Page Specific */
 .login-container {
     background-color: #1e1e1e;
     color: #e0e0e0;
@@ -157,14 +177,13 @@ tr:nth-child(even) {
     border-radius: 5px;
 }
 
-/* Links Styling */
 a {
     color: #007bff;
     text-decoration: none;
 }
 
 a:hover {
-    color: #ff4081; /* Pink hover */
+    color: #ff4081;
 }
 
 .update-container {
@@ -179,7 +198,7 @@ a:hover {
 
 .update-container h2 {
   margin-bottom: 20px;
-  color: #ff9800; /* Orange heading */
+  color: #ff9800;
 }
 
 .update-container label {

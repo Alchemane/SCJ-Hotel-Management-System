@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Check for an error message in the URL
 $error_message = '';
 if (isset($_GET['error'])) {
     $error_message = htmlspecialchars($_GET['error']);
@@ -20,7 +19,6 @@ if (isset($_GET['error'])) {
     <div class="login-container">
         <h2 class="center-text">Admin Login</h2>
         
-        <!-- Display error message if login fails -->
         <?php if ($error_message): ?>
             <p class="error-message"><?= $error_message ?></p>
         <?php endif; ?>

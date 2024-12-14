@@ -90,7 +90,12 @@ if (isset($_GET['id'])) {
                 <option value="canceled" <?= ($booking['bookingStatus'] == 'canceled') ? 'selected' : '' ?>>Canceled</option>
             </select>
 
-            <button type="submit" class="form-button">Update Booking</button>
+            <div class="button-container">
+                <form action="viewBookings.php">
+                    <button type="submit" class="form-button cancel-button">Cancel</button>
+                </form>
+                <button type="submit" class="form-button">Update Booking</button>
+            </div>
         </form>
     </div>
 </body>
